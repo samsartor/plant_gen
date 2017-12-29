@@ -1,0 +1,3 @@
+[submodule "tree-gen"]
+	path = tree-gen
+	url = git@github.com:friggog/tree-gen
