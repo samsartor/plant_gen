@@ -22,6 +22,8 @@ import numpy as np
 import tensorflow as tf
 from glob import glob
 
+import pprds
+
 # Import MNIST data
 # from tensorflow.examples.tutorials.mnist import input_data
 # mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
@@ -36,21 +38,9 @@ gen_hidden_dim = 256
 disc_hidden_dim = 256
 noise_dim = 200 # Noise data points
 
-# Import Image Data
-def read_my_image(filename):
-    image_string = tf.read_file(filename)
-    image_decoded = tf.image.decode_png(image_string, channels=1, dtype=tf.uint8)
-    # grey_image = tf.image.rgb_to_grayscale(image_decoded)
-    float_image = tf.image.convert_image_dtype(image_decoded, tf.float32)
-    float_image.set_shape([28, 28, 1])
-    return float_image
-
 # A vector of filenames.
-filenames = tf.constant(glob("./output/small/*.png"))
-
-dataset = tf.data.Dataset.from_tensor_slices(filenames)
-dataset = dataset.map(read_my_image)
-dataset = dataset.shuffle(buffer_size=10000)
+dataset = pprds.dataset(image_size=24, img_channels=1)
+dataset = dataset.shuffle(buffer_size=1000)
 dataset = dataset.repeat()
 dataset = dataset.batch(batch_size)
 dataset_iterator = dataset.make_one_shot_iterator()
