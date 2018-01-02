@@ -28,7 +28,7 @@ from glob import glob
 
 # Training Params
 num_steps = 10000
-batch_size = 128
+batch_size = 16
 
 # Network Params
 image_dim = 784 # 28*28 pixels * 1 channel
@@ -151,11 +151,11 @@ with tf.Session() as sess:
     sess.run(init)
 
     # Show loaded images
-    f, a = plt.subplots(4, 8, figsize=(8, 4))
+    f, a = plt.subplots(4, 4, figsize=(4, 4))
     loaded = sess.run(next_image_batch)
-    for i in range(8):
+    for i in range(4):
         for j in range(4):
-            k = j * 8 + i
+            k = j * 4 + i
             a[j][i].imshow(img_dat_to_rgb(loaded[k]))
 
     f.show()
