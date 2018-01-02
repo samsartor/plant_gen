@@ -33,13 +33,16 @@ with open(cfg.DB_FILENAME, 'a' if cfg.DB_APPEND else 'w') as csv_file:
         csv_out.writeheader()
 
     for index, worker in workers:
-        worker.wait()
-        print('WORKER {} RETURNED'.format(index))
+        try:
+            worker.wait()
+            print('WORKER {} RETURNED'.format(index))
 
-        sub_filename = cfg.WORKER_OUT.format(index)
-        with open(sub_filename) as sub_file:
-            csv_out.writerows(csv.DictReader(sub_file))
-        os.remove(sub_filename)
-        print('WORKER {} DONE'.format(index))
+            sub_filename = cfg.WORKER_OUT.format(index)
+            with open(sub_filename) as sub_file:
+                csv_out.writerows(csv.DictReader(sub_file))
+            os.remove(sub_filename)
+            print('WORKER {} DONE'.format(index))
+        except Exception:
+            print('WORKER {} FAILED'.format(index))
 
 print('ALL WORKERS DONE')

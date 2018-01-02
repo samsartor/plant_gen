@@ -143,10 +143,13 @@ with open(SAVE_FILE, 'w') as csv_file:
     csv_out.writeheader()
 
     for index in INDS:
-        ind_bytes = index.to_bytes(8, byteorder='big')
-        name = name_hash(cfg.BASE_SEED + ind_bytes)
-        scene_seed = seed_hash(cfg.BASE_SEED + ind_bytes + b'scene')
-        tree_seed = seed_hash(cfg.BASE_SEED + ind_bytes + b'tree')
+        try:
+            ind_bytes = index.to_bytes(8, byteorder='big')
+            name = name_hash(cfg.BASE_SEED + ind_bytes)
+            scene_seed = seed_hash(cfg.BASE_SEED + ind_bytes + b'scene')
+            tree_seed = seed_hash(cfg.BASE_SEED + ind_bytes + b'tree')
 
-        random.seed(scene_seed)
-        csv_out.writerow(gen_scene(name, tree_seed))
+            random.seed(scene_seed)
+            csv_out.writerow(gen_scene(name, tree_seed))
+        except Exception:
+            pass

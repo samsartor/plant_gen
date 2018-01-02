@@ -3,7 +3,7 @@ from random import choice, uniform
 import time
 
 # number of trees to generate and render
-TOTAL_COUNT = 1
+TOTAL_COUNT = 100
 # number of workers (blender instances)
 WORKER_COUNT = 1
 
@@ -26,7 +26,7 @@ WORKER_OUT = '/tmp/_pprd_sub{}.csv'
 # command to launch blender
 BLENDER_EXE = 'blender'
 # seed prefix
-BASE_SEED = b'\4'
+BASE_SEED = b'\0'
 # .blend file to build off of
 BASE_BLEND = 'base.blend'
 
